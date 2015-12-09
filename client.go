@@ -143,6 +143,8 @@ func NewClient(url string) *Client {
     client.handlerMap = make(map[string]RecvHandler)
 	client.channelMap = make(map[string]chan []byte)
 
+	client.httpClient = new(http.Client)
+
 	return client
 }
 
@@ -170,6 +172,8 @@ func (client *Client) Write(cmd string, data []byte) {
 }
 
 func (client *Client) Run() error {
+	client.running = true
+
 	go client.receiver()
 	go client.sender()
 
