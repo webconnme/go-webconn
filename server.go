@@ -71,8 +71,7 @@ func (w *Webconn) postMessages(cmd string, ch <-chan []byte) (int, error) {
     buf := []byte{}
     for {
         select {
-            case <-ch:
-                b := <-ch
+            case b := <-ch:
                 buf = append(buf, b...)
             default:
                 if len(buf) > 0 {
